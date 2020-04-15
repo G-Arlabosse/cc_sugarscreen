@@ -1,13 +1,11 @@
-void setup()
-{ 
-  size(600,600);
+void setup(){ 
+  size(1000,600);
   background(100);
 }
 
 Ball ball=new Ball(50);
 
-void draw()
-{
+void draw(){
   ball.display();
   ball.move();
   ball.stayIn();
@@ -16,7 +14,7 @@ void draw()
 class Ball // On crée une classe qui s'appelle Ball
 {
   // Les objets crées avec cette classe auront tous ces "variables membres"
-  PVector pos= new PVector(width/2, height/2);
+  PVector pos;
   PVector spd;
   int size;
   // Les classes ont une fonction spéciale appelée "Constructeur" qui donne toutes les valeurs de base aux variables un peu comme le setup
@@ -24,7 +22,7 @@ class Ball // On crée une classe qui s'appelle Ball
   {
     pos= new PVector(width/2, height/2);
     size= _size;
-    spd= new PVector(1,2);
+    spd= new PVector(2,4);
   }
   
   // display est une fonction membre
@@ -45,7 +43,7 @@ class Ball // On crée une classe qui s'appelle Ball
   {
     if (pos.y>575) { spd.y*=-1; } // On part dans l'autre sens si on touche un bord
     if (pos.y<25) { spd.y*=-1; } // Pareil
-    if (pos.x>575) { spd.x*=-1; } // Pareil
+    if (pos.x>975) { spd.x*=-1; } // Pareil
     if (pos.x<25) { spd.x*=-1; } // Pareil
   }
 }
