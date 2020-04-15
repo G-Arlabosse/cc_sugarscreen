@@ -1,29 +1,51 @@
-import java.util.Random; // Importer le module random
-
-void setup(){ // Créer le premier cercle
+void setup()
+{ 
   size(600,600);
   background(100);
-  fill(255,0,0);
-  ellipse(pos.x, pos.y, 50,50);
 }
 
-Random rand = new Random(); // Mettre le module à disposition pour le reste
-int upperbound = 3; // Déclaration d'un int limite (prendra un random 0-2)
-int incrX = rand.nextInt(upperbound)+1; // Incrément de X sera random entre 1-3
-int incrY = rand.nextInt(upperbound)+1; // Incrément de Y sera random entre 1-3
+Ball ball=new Ball(50);
 
-PVector pos= new PVector (0,0); // On crée un couple de coordonnées
-boolean start=true; // Test pour savoir si c'est le début
-void draw(){
-  fill(255,0,0);
-  ellipse(pos.x, pos.y, 50, 50);
-  pos.x+=incrX; // On change la position X du cercle
-  pos.y+=incrY; // On change la position Y du cercle
-  if (pos.y>575) { incrY*=-1; } // On part dans l'autre sens si on touche un bord
-  if (pos.y<25 && start==false) { incrY*=-1; } // Pareil, on check avec start car le carcle commence à 0,0 au début
-  if (pos.x>575) { incrX*=-1; } // Pareil
-  if (pos.x<25 && start==false) { incrX*=-1; } // Pareil avec start
-  if (pos.x>25 && pos.y>25){ // Si on dépasse 25 en X et Y, on est plus aux bords du début
-    start=false; // On enlève false pour permettre tous les rebonds
+void draw()
+{
+  ball.display();
+  ball.move();
+  ball.stayIn();
+}
+
+class Ball // On crée une classe qui s'appelle Ball
+{
+  // Les objets crées avec cette classe auront tous ces "variables membres"
+  PVector pos= new PVector(width/2, height/2);
+  PVector spd;
+  int size;
+  // Les classes ont une fonction spéciale appelée "Constructeur" qui donne toutes les valeurs de base aux variables un peu comme le setup
+  Ball(int _size) // A la création on demandera la taille de la balle (le "_" permet de différencier la variable membre size du paramètre _size)
+  {
+    pos= new PVector(width/2, height/2);
+    size= _size;
+    spd= new PVector(1,2);
+  }
+  
+  // display est une fonction membre
+  // display doit afficher un cercle aux coordonnées pos de taille size par size
+  void display()
+  {
+    fill(255,0,0);
+    ellipse(pos.x, pos.y, size,size);
+  }
+  
+  void move()
+  {
+    pos.x+=spd.x;
+    pos.y+=spd.y;
+  }
+  
+  void stayIn()
+  {
+    if (pos.y>575) { spd.y*=-1; } // On part dans l'autre sens si on touche un bord
+    if (pos.y<25) { spd.y*=-1; } // Pareil
+    if (pos.x>575) { spd.x*=-1; } // Pareil
+    if (pos.x<25) { spd.x*=-1; } // Pareil
   }
 }
